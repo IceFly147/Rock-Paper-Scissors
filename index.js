@@ -1,65 +1,57 @@
-let humanPoints = 0;
-let machinePoints = 0;
-let totalHumanPoints,totalMachinePoints
+let userTotal = 0
+let machineTotal = 0
+const buttons = document.querySelectorAll('.btn')
+let winner = ""
 
-function computerChoice(){
-    const choices = ["Rock","Paper","Scissors"];
-    const random = Math.floor(Math.random() * choices.length);
-    return choices[random];
-}
-function totalScore(hpoints,mpoints,i){
-    totalHumanPoints = hpoints + totalHumanPoints;
-    totalMachinePoints = mpoints + totalMachinePoints;
-
-    if (totalHumanPoints > totalMachinePoints &&  i == 5){
-        alert("Da Hooman Wins!");
-
-    }
-    else if (totalHumanPoints < totalMachinePoints &&  i == 5){
-        alert("Da Machine Wins!");
-    }
-
-}
-function userChoice(){
-    let userChoice;
-    const userPrompt = prompt("Enter 1 For Rock,2 For Paper Or 3 For Scissors","1");
-    if (userPrompt == "1"){
-        userChoice = "Rock";
-    }
-    else if (userPrompt == "2"){
-        userChoice = "Paper";
-    }
-    else{
-        userChoice = "Scissors"
-    }
-    return userChoice;
-}
-function machineWins(){
-    alert("Machine Wins !")
+function computerPlay() {
+    let choices = ['rock', 'paper', 'scissors']
+    return choices[Math.floor(Math.random() * choices.length)]
 }
 
-function userWins(){
-    alert("Hooman Wins !")
+function disableButtons() {
+    buttons.forEach(elem => {
+        elem.disabled = true
+    })
 }
 
-function playRound(human, machine) {
+function playRound(userChoice) {
+    let machineChoice = computerPlay()
+    let result = ""
 
-    if (human == machine) {
-      alert("It's A Tie!");
+    if ((userChoice == 'rock' && machineChoice == 'scissors') ||
+        (userChoice == 'scissors' && machineChoice == 'paper') ||
+        (userChoice == 'paper' && machineChoice == 'rock')) {
+        
+        userTotal += 1
+        result = ('The User Won. User Chose '+ userChoice + ' While Machine Chose '+ machineChoice)
+
+        if (userTotal == 5) {
+            winner = "The Winner Is The User!"
+            disableButtons()
+        }
     }
-    if ((human == 'Rock' && machine == 'Scissors') || (human == 'Scissors' && machine == 'Paper') || (human == 'Paper' && machine == 'Rock')) {
-      userWins();
-      humanPoints++
+    else if (userChoice == machineChoice) {
+        result = (`A Tie Has Occured, Both of You Chose ${userChoice}`)
     }
-    if ((machine == 'Rock' && human == 'Scissors') || (machine == 'Scissors' && human == 'Paper') ||(machine == 'Paper' && human == 'Rock')) {
-      machineWins()
-      machinePoints++
+    else {
+        machineTotal += 1
+        result = (`The Machine Won. User Chose ${userChoice} While Machine Chose ${machineChoice}`)
+
+        if (machineTotal == 5) {
+            winner = 'The Machine Won The Game!'
+            disableButtons()
+        }
     }
-    totalScore(humanPoints,machinePoints)
+
+    document.querySelector('.result-round').innerHTML = result
+    document.querySelector('.user-score').textContent = userTotal
+    document.querySelector('.machine-score').textContent = machineTotal
+    document.querySelector('.winner').textContent = winner
+
 }
-  
-for (let i = 0; i < 5; i++) {
-    const user = userChoice()
-    const machine = computerChoice()
-    playRound(user,machine,i)
-}
+
+buttons.forEach(button =>{
+    button.addEventListener('click', function(){
+        playRound(button.value)
+    })
+})
