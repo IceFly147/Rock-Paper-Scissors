@@ -1,9 +1,17 @@
+let humanPoints = 0;
+let machinePoints = 0;
+let totalHumanPoints,totalMachinePoints
 function computerChoice(){
     const choices = ["Rock","Paper","Scissors"];
     const random = Math.floor(Math.random() * choices.length);
     return choices[random];
 }
+function totalScore(hpoints,mpoints){
+    totalHumanPoints = hpoints + totalHumanPoints;
+    totalMachinePoints = mpoints + totalMachinePoints
+    
 
+}
 function userChoice(){
     let userChoice;
     const userPrompt = prompt("Enter 1 For Rock,2 For Paper Or 3 For Scissors","1");
@@ -28,16 +36,18 @@ function userWins(){
 
 function playRound(human, machine) {
 
-    if (playerSelection === computerSelection) {
+    if (human == machine) {
       alert("It's A Tie!");
     }
     if ((human == 'Rock' && machine == 'Scissors') || (human == 'Scissors' && machine == 'Paper') || (human == 'Paper' && machine == 'Rock')) {
       userWins();
+      humanPoints++
     }
     if ((machine == 'Rock' && human == 'Scissors') || (machine == 'Scissors' && human == 'Paper') ||(machine == 'Paper' && human == 'Rock')) {
       machineWins()
+      machinePoints++
     }
-    updateScoreMessage(roundWinner, playerSelection, computerSelection)
+    totalScore(humanPoints,machinePoints)
 }
   
 for (let i = 0; i < 5; i++) {
