@@ -18,9 +18,30 @@ function userChoice(){
     }
     return userChoice;
 }
+function machineWins(){
+    alert("Machine Wins !")
+}
 
-for (let i = 0; i < 4; i++) {
+function userWins(){
+    alert("Hooman Wins !")
+}
+
+function playRound(human, machine) {
+
+    if (playerSelection === computerSelection) {
+      alert("It's A Tie!");
+    }
+    if ((human == 'Rock' && machine == 'Scissors') || (human == 'Scissors' && machine == 'Paper') || (human == 'Paper' && machine == 'Rock')) {
+      userWins();
+    }
+    if ((machine == 'Rock' && human == 'Scissors') || (machine == 'Scissors' && human == 'Paper') ||(machine == 'Paper' && human == 'Rock')) {
+      machineWins()
+    }
+    updateScoreMessage(roundWinner, playerSelection, computerSelection)
+}
+  
+for (let i = 0; i < 5; i++) {
     const user = userChoice()
     const machine = computerChoice()
-    
+    playRound(user,machine)
 }
