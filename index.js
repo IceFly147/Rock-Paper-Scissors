@@ -1,15 +1,23 @@
 let humanPoints = 0;
 let machinePoints = 0;
 let totalHumanPoints,totalMachinePoints
+
 function computerChoice(){
     const choices = ["Rock","Paper","Scissors"];
     const random = Math.floor(Math.random() * choices.length);
     return choices[random];
 }
-function totalScore(hpoints,mpoints){
+function totalScore(hpoints,mpoints,i){
     totalHumanPoints = hpoints + totalHumanPoints;
-    totalMachinePoints = mpoints + totalMachinePoints
-    
+    totalMachinePoints = mpoints + totalMachinePoints;
+
+    if (totalHumanPoints > totalMachinePoints &&  i == 5){
+        alert("Da Hooman Wins!");
+
+    }
+    else if (totalHumanPoints < totalMachinePoints &&  i == 5){
+        alert("Da Machine Wins!");
+    }
 
 }
 function userChoice(){
@@ -53,5 +61,5 @@ function playRound(human, machine) {
 for (let i = 0; i < 5; i++) {
     const user = userChoice()
     const machine = computerChoice()
-    playRound(user,machine)
+    playRound(user,machine,i)
 }
